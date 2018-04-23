@@ -86,7 +86,7 @@ We first present the most abstract version of the core result that we rely on, u
 Through this process we introduce:
 
 \begin{itemize}
-\item the non-triviality property of consensus protocols 
+\item the non-triviality property of consensus protocols
 \item a fixed known set of $n$ consensus-forming nodes (with protocol states which are themselves optionally $n$-tuples of protocol states)
 \item asynchronous fault tolerance for a given number of Byzantine faults (if it's less than the total number of nodes)
 %\item safety oracles for protocols where nodes have ``weights" and only their ``latest observed state'' determines how they effect protocol execution
@@ -141,8 +141,8 @@ The logic $\mathcal{L}_\cat{C}$, however, must have:
 
 %Consider being more formal in the definition, and add
 %\begin{align*}
-%    &\sigma \to \sigma' &&\text{(introducing assumption)}   &&\text{(1)}\\ 
-   
+%    &\sigma \to \sigma' &&\text{(introducing assumption)}   &&\text{(1)}\\
+
 
 \begin{itemize}
 \item a set of propositions, $props(\mathcal{L}_\cat{C})$, which somehow implement maps $p:\cat{C} \to \{True, False\}$, mapping all possible consensus values to ``True'' or ``False''
@@ -156,14 +156,14 @@ The category of protocol states $\cat{\Sigma}$ is a category. No additional info
 
 \begin{itemize}
 \item $ob(\cat{\Sigma})$, a set of objects called ``protocol states'': $\sigma_1$, $\sigma_2$, $\sigma_3$,\ldots
-\item $mo(\cat{\Sigma})$, a set of morphisms called ``protocol executions'': $\tau_1$, $\tau_2$, $\tau_3$,\ldots
+\item $hom(\cat{\Sigma})$, a set of morphisms called ``protocol executions'': $\tau_1$, $\tau_2$, $\tau_3$,\ldots
 \item each execution maps a protocol state to a protocol state $\tau:ob(\cat{\Sigma}) \to ob(\cat{\Sigma})$
 \item if a morphism $\tau$ maps object $\sigma_1$ to object $\sigma_2$, we write $\sigma_1 \xrightarrow[]{\tau} \sigma_2$
 \item if one execution begins where the other ends, protocol executions compose as follows:
-$$\sigma_1 \xrightarrow[]{\tau_1} \sigma_2 \land \sigma_2 \xrightarrow[]{\tau_2} \sigma_3 \implies \sigma_1 \xrightarrow[]{\tau_1 \circ \tau_2} \sigma_3$$,
-\item $mo(\cat{\Sigma})$ is closed under composition: $\tau_1, \tau_2 \in mo(\cat{\Sigma}) \implies \tau_1 \circ \tau_2 \in mo(\cat{\Sigma})$
+$$\sigma_1 \xrightarrow[]{\tau_1} \sigma_2 \land \sigma_2 \xrightarrow[]{\tau_2} \sigma_3 \implies \sigma_1 \xrightarrow[]{\tau_2 \circ \tau_1} \sigma_3$$,
+\item $hom(\cat{\Sigma})$ is closed under composition: $\tau_1, \tau_2 \in hom(\cat{\Sigma}) \implies \tau_2 \circ \tau_1 \in hom(\cat{\Sigma})$
 \item there exists a unique identity morphism $\tau_0$, ``do nothing'', such that: $\sigma_1 \xrightarrow[]{\tau_0} \sigma_2$ $\implies$ $\sigma_2 = \sigma_1$, for all $\sigma_1 \in ob(\cat{\Sigma})$
-\item we denote $\exists \tau \in mo(\cat{\Sigma}) \hspace{1mm} . \hspace{1mm} \sigma \xrightarrow[]{\tau} \sigma'$ simply as $\sigma \to \sigma'$
+\item we denote $\exists \tau \in hom(\cat{\Sigma}) \hspace{1mm} . \hspace{1mm} \sigma \xrightarrow[]{\tau} \sigma'$ simply as $\sigma \to \sigma'$
 \end{itemize}
 
 
@@ -183,7 +183,7 @@ From now on, any variable named with lower case letter ``$p$'' will be a proposi
 
 \begin{defn}
 \begin{description}
-A proposition $p$ is said to have \emph{estimate safety} in a protocol state $\sigma$ if 
+A proposition $p$ is said to have \emph{estimate safety} in a protocol state $\sigma$ if
 
 $$
 \forall \sigma':\sigma \to \sigma',\hspace{1.5mm} \mathcal{E}(\sigma') \Rightarrow p
@@ -202,9 +202,9 @@ Before we present the consensus safety theorem, we provide some useful notation 
 \begin{tikzcd}
 {}
   &
-{}  
+{}
   &
-{}  
+{}
   &
 {}
   &
@@ -219,15 +219,15 @@ Before we present the consensus safety theorem, we provide some useful notation 
   &
 \exists \sigma_3:(\sigma_1 \to \sigma_3) \land (\sigma_2 \to \sigma_3)
   &
-{}  
+{}
   &
 {}
   &
 {}
   \\
-{}  
+{}
   &
-{}  
+{}
   &
 {}
   &
@@ -265,7 +265,7 @@ This lemma asserts that if the protocol is safe on $p$ at state $\sigma$, it wil
 \begin{proof}
 Assuming that $\sigma \to \sigma'$ for arbitrary $\sigma'$ and $S(p, \sigma)$, we want to show that $S(p, \sigma')$.
   \begin{align*}
-    &\sigma \to \sigma' &&\text{(introducing assumption)}   &&\text{(1)}\\ 
+    &\sigma \to \sigma' &&\text{(introducing assumption)}   &&\text{(1)}\\
     &\forall \sigma'' \hspace{1mm}.\hspace{1mm}\sigma \to \sigma' \land \sigma' \to \sigma'' \implies \sigma \to \sigma'' &&\text{(by morphism composition)}   &&\text{(2)}\\
     &\forall \sigma'' \hspace{1mm}.\hspace{1mm}\sigma' \to \sigma'' \implies \sigma \to \sigma'' &&\text{(follows from (1) and (2), by modus ponens (with exportation))}   &&\text{(3)}\\
     &\forall \sigma^* \hspace{1mm}.\hspace{1mm}\sigma \to \sigma^* \implies \mathcal{E}(\sigma^*) \Rightarrow p &&\text{(introducing assumption $S(p, \sigma)$ by its definition) }   &&\text{(4)} \\
@@ -311,7 +311,7 @@ This lemma asserts that if some $p$ is safe at state $\sigma'$, then its negatio
 The intuitive approach is to prove the lemma by contradition: If we assume for contradiction that a previous state, $\sigma$, was safe on $\neg{p}$, then it follows (using forward safety) $\neg{p}$ is still safe in future state, $\sigma'$. This contradicts the assumption that $p$ is safe in state $\sigma'$, so we can conclude that $\neg{p}$ is not safe: $\neg{S(\neg{p},\sigma)}$.
 
 \begin{proof}
-  Assuming that $\sigma \to \sigma'$ for an arbitrary $\sigma$ and $S(p,\sigma')$, we show that $\neg{S(\neg{p},\sigma')}$
+  Assuming that $\sigma \to \sigma'$ for an arbitrary $\sigma$ and $S(p,\sigma')$, we show that $\neg{S(\neg{p},\sigma)}$
   \begin{align*}
     &S(\neg{p},\sigma) \implies S(\neg{p},\sigma') &&\text{(from assumption $\sigma \to \sigma'$ and lemma 1)}   &&\text{(1)} \\
     &S(\neg{p},\sigma') \implies \neg{S(p,\sigma')} &&\text{(lemma 2 applied to $\sigma'$) }   &&\text{(2)} \\
@@ -340,13 +340,12 @@ S(p,\sigma_3)
 {}
   &
 {}
-  \\ 
+  \\
 {}
   &
 {}
   &
 {}
-  \arrow[r,Rightarrow,""]
   &
 {}
   &
@@ -361,7 +360,6 @@ S(p,\sigma_3)
 {}
   &
 {}
-  \arrow[r,Rightarrow,""]
   &
 {}
   &
@@ -382,12 +380,12 @@ S(p,\sigma_3)
   &
 S(p,\sigma_1)
   \arrow[uuur,Rightarrow,"\text{Lemma 1}"]
-  \arrow[rr,Rightarrow,"\text{Lemma 1 $\circ$ Lemma 3}"]
+  \arrow[rr,Rightarrow,"\text{Lemma 3 $\circ$ Lemma 1}"]
   &
 {}
   &
 \neg{S(\neg{p},\sigma_2)}
-  \arrow[uuul,Leftarrow,"\text{Lemma 3}"] 
+  \arrow[uuul,Leftarrow,"\text{Lemma 3}"]
 \end{tikzcd}
 \end{equation*}
 
@@ -407,7 +405,7 @@ Theorem 1 (Consensus safety: $\sigma_1 \sim \sigma_2$ $\implies$ $\neg(S(p,\sigm
 \end{proof}
 
 Line (4) of the proof provides a key insight and is important enough to be called a lemma, named ``Distributed consistency'':
- 
+
 \begin{lemma}[$\sigma_1 \sim \sigma_2$ $\implies$ Distributed consistency]
 $$
 \sigma_1 \sim \sigma_2 \implies \hspace{2mm} (S(p,\sigma_1) \implies \neg{S(\neg{p},\sigma_2)})
@@ -429,12 +427,12 @@ There exist a proposition $p$ and two protocol states $\sigma_1$, $\sigma_2$ suc
 
 \begin{equation*}
 \begin{tikzcd}
-\sigma_1  
+\sigma_1
   &
 {}
   &
 \sigma_2
-  \\ 
+  \\
   &
 \sigma_0
   \arrow[ur,""]
@@ -461,7 +459,7 @@ Where $\sigma_1 \nsim \sigma_2$ denotes $\neg{(\sigma_1 \sim \sigma_2)}$
   &\exists \sigma_1, \sigma_2 \hspace{1mm} . \hspace{1mm}S(p,\sigma_1) \land S(\neg{p},\sigma_2) &&\text{(from non-triviality)} &&\text{(1)}\\
   &\sigma \sim \sigma' \implies \neg(S(p,\sigma) \land S(\neg{p},\sigma')) &&\text{(consensus safety theorem)} &&\text{(2)}\\
   &S(p,\sigma) \land S(\neg{p},\sigma') \implies \sigma \nsim \sigma' &&\text{(contrapositive of (2))} &&\text{(3)}\\
-  &\exists \sigma_1, \sigma_2 \hspace{1mm} . \hspace{1mm}\sigma_1 \nsim \sigma_2 \hspace{5mm} \qedhere &&\text{(from (2) and (3), by modus ponens with substitutions $\sigma=\sigma_1$ and $\sigma'=\sigma_2$)} &&\text{(4)}\\
+  &\exists \sigma_1, \sigma_2 \hspace{1mm} . \hspace{1mm}\sigma_1 \nsim \sigma_2 \hspace{5mm} \qedhere &&\text{(from (1) and (3), by modus ponens with substitutions $\sigma=\sigma_1$ and $\sigma'=\sigma_2$)} &&\text{(4)}\\
 \end{align*}
 \end{proof}
 
@@ -497,7 +495,7 @@ The problem of consensus for us, in some way, then, is to help nodes make it to 
 
 Outline of remainder of part 1:
 
-define bivalence 
+define bivalence
 
 talk about locking, give some results for locking (maybe w sketch proof)
 
@@ -535,7 +533,7 @@ Protocol states $\sigma \in ob(\cat{\Sigma^1})$ satisfy one of the following:
 
 And from now on, $\sigma_i$ will refer to the i'th entry of the tuple $\sigma$, \emph{which is a protocol state in another category $\cat{\Sigma}$}.
 
-And the protocol state transitions $mo(\cat{\Sigma^1})$ satisfy:
+And the protocol state transitions $hom(\cat{\Sigma^1})$ satisfy:
 
 $$
 \sigma \to \sigma' \implies \sigma_i \to \sigma'_i \hspace{3mm} \forall i=1...n
@@ -551,7 +549,7 @@ The objects in the category $\cat{\Sigma^1}$ are tuples of protocol states in an
 \begin{defn}[Estimate Safety Consensus Protocols, Part 5 of ?: Nodes Running in Parallel with Consensus Safety]
 \begin{description}
 
-We now require that the protocol state transitions $mo(\cat{\Sigma^1})$ satisfy an additional constraint:
+We now require that the protocol state transitions $hom(\cat{\Sigma^1})$ satisfy an additional constraint:
 
 For $\sigma$, $\sigma'$ in $ob(\cat{\Sigma^1})$:
 \begin{align*}
@@ -578,9 +576,9 @@ Protocol states for a new category of protocol states $\cat{\Sigma^2}$, $\sigma 
   \sigma &= (\sigma_1,\sigma_2,\sigma_3,...,\sigma_{n-1},\sigma_n)
 \end{align*}
 
-This time with $\sigma_i \in \cat{\Sigma^1}$ 
+This time with $\sigma_i \in \cat{\Sigma^1}$
 
-And the protocol state transitions $mo(\cat{\Sigma^2})$ satisfy:
+And the protocol state transitions $hom(\cat{\Sigma^2})$ satisfy:
 
 $$
 \sigma \to \sigma' \land \sigma \neq \emptyset \implies \sigma_i \to \sigma'_i \hspace{3mm} \forall i=1...n
@@ -591,16 +589,16 @@ We will now pause the definition for further analysis again.
 \end{description}
 \end{defn}
 
-Lets review some things, quickly: 
+Lets review some things, quickly:
 
 \begin{itemize}
 \item $\cat{\Sigma^2}$ is the category of $n$ parallel nodes executing protocol $\cat{\Sigma^1}$,
-\item $\cat{\Sigma^1}$ is the category of $n$ parallel nodes executing protocol $\cat{\Sigma}$, without consensus failure 
+\item $\cat{\Sigma^1}$ is the category of $n$ parallel nodes executing protocol $\cat{\Sigma}$, without consensus failure
 \end{itemize}
 
 So  $\cat{\Sigma^2}$ is the category of $n$ nodes watching $n$ nodes execute $\cat{\Sigma}$ while maintaining common futures
 
-Do the morphisms in $\cat{\Sigma^2}$ evidence exactly $n$ parallel protocol executions of $\cat{\Sigma}$? Not necessarily. 
+Do the morphisms in $\cat{\Sigma^2}$ evidence exactly $n$ parallel protocol executions of $\cat{\Sigma}$? Not necessarily.
 
 Specifically, it's possible given the definition we have so far for us to have an object $\sigma$ such that we have:
 
@@ -610,13 +608,13 @@ $$
 
 Or for it to have a morphism with two objects $\sigma \to \sigma'$:
 
-Then we know that 
+Then we know that
 
 $$
-\sigma_{ik} \to \sigma'_{ik} \land \sigma_{jk} \to \sigma'_{jk} 
+\sigma_{ik} \to \sigma'_{ik} \land \sigma_{jk} \to \sigma'_{jk}
 $$
 
-but 
+but
 
 $$
 \sigma_{ik} \nleftrightarrow \sigma_{jk} \lor \sigma'_{ik} \nleftrightarrow \sigma'_{jk} \lor \sigma_{ik} \nleftrightarrow \sigma'_{jk} \lor \sigma_{jk} \nleftrightarrow \sigma'_{ik}
@@ -638,7 +636,7 @@ For example, if neither of the dashed arrows in the following diagram exist, the
 \sigma'_jk
   \arrow[lllddd,dashed]
   \arrow[lll,""]
-  \\ 
+  \\
 {}
   &
 {}
@@ -646,7 +644,7 @@ For example, if neither of the dashed arrows in the following diagram exist, the
 {}%  \arrow[r,Rightarrow,""]
   &
 {}
-  \\ 
+  \\
 {}
   &
 {}
@@ -678,31 +676,31 @@ $$
 \forall i,j,k \hspace{1mm} . \hspace{1mm} \sigma_{ik} \leftrightarrow \sigma_{jk}
 $$
 
-And the protocol state transitions $mo(\cat{\Sigma^2})$ additionally now need to satisfy:
+And the protocol state transitions $hom(\cat{\Sigma^2})$ additionally now need to satisfy:
 
 For $\sigma \to \sigma'$:
-\begin{align*}  
-  \forall k \hspace{1mm} . \hspace{1mm} &\exists \{\tau_i \in mo(\cat{\Sigma})\}_{i=1}^N \text{ such that the path } \sigma_{*1} \xrightarrow[]{\tau_1} \sigma_{*2} \xrightarrow[]{\tau_3} \sigma_{*3} \xrightarrow[]{\tau_4} \sigma_{*4}... \xrightarrow[]{\tau_N} \sigma_{*N} \\
+\begin{align*}
+  \forall k \hspace{1mm} . \hspace{1mm} &\exists \{\tau_i \in hom(\cat{\Sigma})\}_{i=1}^N \text{ such that the path } \sigma_{*1} \xrightarrow[]{\tau_1} \sigma_{*2} \xrightarrow[]{\tau_3} \sigma_{*3} \xrightarrow[]{\tau_4} \sigma_{*4}... \xrightarrow[]{\tau_N} \sigma_{*N} \\
   &\text{ contains each term in $\sigma$ or $\sigma'$ of the form $\sigma_{ik}$ or $\sigma'_{ik}$, respectively, with} \\
-  &\text{ $\sigma_{ik}$ not appearing after $\sigma'_{ik}$ in path $\{\tau_i \in mo(\cat{\Sigma})\}_{i=1}^N$ }
+  &\text{ $\sigma_{ik}$ not appearing after $\sigma'_{ik}$ in path $\{\tau_i \in hom(\cat{\Sigma})\}_{i=1}^N$ }
 \end{align*}
 
-I.e. there exists a (single threaded) execution of protocol states $\sigma_ij$ or $\sigma'_ij$ with last index $j = k$ which passes in the direction of $\sigma_{ik} \to \sigma'_{ik}$. 
+I.e. there exists a (single threaded) execution of protocol states $\sigma_ij$ or $\sigma'_ij$ with last index $j = k$ which passes in the direction of $\sigma_{ik} \to \sigma'_{ik}$.
 
 The purpose of this condition is to restrict $\cat{\Sigma^2}$ to parallel executions of $\cat{\Sigma^1}$ which each observe ``the same" parallel execution of $\Sigma$.
 \end{description}
 \end{defn}
 
-Lets do some more review: 
+Lets do some more review:
 
 \begin{itemize}
 \item $\cat{\Sigma^2}$ is the category of $n$ parallel nodes executing protocol $\cat{\Sigma^1}$, without equivocation
-\item $\cat{\Sigma^1}$ is the category of $n$ parallel nodes executing protocol $\cat{\Sigma}$, without consensus failure 
+\item $\cat{\Sigma^1}$ is the category of $n$ parallel nodes executing protocol $\cat{\Sigma}$, without consensus failure
 \end{itemize}
 
 So, a transition in $\cat{\Sigma^2}$ has the following properties:
 
-It takes 
+It takes
 
 n nodes who are watching n nodes safely execute a consensus protocol...
 
@@ -780,7 +778,7 @@ Follow-the-weights
 Maybe we can generally use something like:
 $$
 \mathcal{E}(\sigma) = {argmax}_{p\in \mathcal{L}_\cat{C}} \sum_{c \in \cat{C}} \sum_{i=1}^n W(i)*(\mathcal{E}(\sigma_i)(c) \land p(c))
-$$ 
+$$
 
 But in practice we use some more tractable things.
 
@@ -878,7 +876,7 @@ but that other also:
 
 
 
-So, WTS 
+So, WTS
 
 sigma ~ sigma' OVER TIME
 no stuckness
@@ -887,7 +885,7 @@ no stuckness
 
 S(p, sigma) => locked on S(p), simga'
 
-When does locked on safety -> safety? 
+When does locked on safety -> safety?
 
 When being on not p means that you have a path to S (not p).
 
@@ -911,9 +909,9 @@ or
 
 not S(p) and not S(not p) => path to S(p) and path to S(not p)
 
-This one is quite strong 
+This one is quite strong
 
-its' 
+its'
 
 non-stuckness and bi-valence
 non-triviality (if exists states wth unsafe p and unsafe not p)
@@ -1052,7 +1050,7 @@ D
 \sigma_3
   &
 {}
-  \\ 
+  \\
 \sigma_1
   \arrow[ur,""]
   &
@@ -1154,7 +1152,7 @@ The writing style will be informal because our aim is to help novice readers lea
 
 \section{Foundational Definitions and Theorem}
 
-Consensus protocols are fundamentally about having \emph{nodes} who run the protocol make the same decisions. Nodes that follow the protocol are called ``correct" or ``protocol-following". 
+Consensus protocols are fundamentally about having \emph{nodes} who run the protocol make the same decisions. Nodes that follow the protocol are called ``correct" or ``protocol-following".
 
 Consensus is challenging because each node is a different location in a distributed system, and therefore may see different protocol messages in different orders. It is sometimes additionally complicated because we often want to acheive consenssu in the presence of nodes who might crash (``crash-faulty nodes'') or nodes who might not be following the protocol at all (``Byzantine nodes'').
 
@@ -1168,7 +1166,7 @@ All traditional consensus protocols have been derived to satisfy this definition
 
 The Bitcoin blockchain protocol, on the other hand, does not explicitly make decisions. However, it does still \emph{act} like a consensus protocol because it lets people interacting with the blockchain make the same decision. All they have to do is wait for 6 confirmations!
 
-An ``estimate'' can be understand as a reversible guess. A node who makes an estimate on a value of the consensus may at a later stage of the protocol have an estimate with a different value. 
+An ``estimate'' can be understand as a reversible guess. A node who makes an estimate on a value of the consensus may at a later stage of the protocol have an estimate with a different value.
 
 \begin{defn}[Estimate safety]
 A correct node's estimate is said to be ``safe'' if that node will not have a different estimate in any future protocol state.
@@ -1197,7 +1195,7 @@ This proof, however, does not say anything about whether there exist protocols f
 
 \section{Protocol Specifications}
 
-The protocols that we're going to see here have a few things in common. First, there is a fixed set of nodes $V$ (called ``validators'') who are responsible for originating protocol messages. 
+The protocols that we're going to see here have a few things in common. First, there is a fixed set of nodes $V$ (called ``validators'') who are responsible for originating protocol messages.
 
 Each of these valdiators have ``weights", implemented by a map (which is part of the protocol specification, at least for now):
 
@@ -1223,7 +1221,7 @@ A message $m_1$ is a ``dependency" of a message $m_2$ if it is in the justificat
 
 Two messages $m_1$ and $m_2$ are called ``an equivocation" if they are from the same validator but neither are a dependency of the other. In each of these protocols, producing an equivocation is considered Byzantine behaviour.
 
-``Protocol states", also called ``views", for each of these protocols, consist simply of sets of protocol messages. 
+``Protocol states", also called ``views", for each of these protocols, consist simply of sets of protocol messages.
 
 A message $m_1$ from validator $v$ is a ``latest message" in a view $u$ if there is no $m_2 \in u$ from validator $v$ such that $m_1$ is a depednency of $m_2$.
 
@@ -1289,11 +1287,11 @@ For the blockchain consensus, the estimator is GHOST given latest messages
 
 
     \sigma \to \sigma' \land S(p,\sigma)
-    \sigma \to \sigma' \land \sigma \to \sigma'' \implies \mathcal{E}(\sigma'') 
+    \sigma \to \sigma' \land \sigma \to \sigma'' \implies \mathcal{E}(\sigma'')
 
 
     \sigma \to X \land S(p,\sigma)
-    \sigma \to X \land 
+    \sigma \to X \land
 
 
     Lemma:
@@ -1348,7 +1346,7 @@ For the blockchain consensus, the estimator is GHOST given latest messages
     \neg{(\mathcal{E}(\sigma) \Rightarrow \neg{p})} \implies \neg{S(\neg{p},\sigma)} &&\text{(the contrapositive of (4))}  &&\text{(5)} \\
     \mathcal{E}(\sigma) \Rightarrow p \implies \neg{(\mathcal{E}(\sigma) \Rightarrow \neg{p})} &&\text{(this is a property of $\mathcal{E}$ for any argument, by definition)}  &&\text{(6)} \\
     \neg{S(\neg{p},\sigma)} &&\text{(from (3), (6) and (5)) }   &&\text{(7)} &&\qedhere
- 
+
 
     \neg{\neg{\mathcal{E}} \lor \neg{p}}
     mathcal{E} \land p
@@ -1368,7 +1366,7 @@ For the blockchain consensus, the estimator is GHOST given latest messages
 \sigma_3
   &
 {}
-  \\ 
+  \\
 \sigma_1
   \arrow[ur,""]
   &
